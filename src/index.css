@@ -1,0 +1,166 @@
+@import "@fontsource-variable/inter";
+@import "tailwindcss";
+
+@theme {
+  /* === Primary: Carmine Red & Onyx Slate === */
+  /* Red shifts deeper and more elegant than the pure vibrant red */
+  --color-primary-50: #FDF6F6;
+  --color-primary-100: #FAECEC;
+  --color-primary-200: #F2D0D2;
+  --color-primary-300: #E6A8AB;
+  --color-primary-400: #D47076;
+  --color-primary-500: #AF2830; 
+  --color-primary-600: #9B2226; /* Signature Modern Luxury Carmine */
+  --color-primary-700: #7A1A1E;
+  --color-primary-800: #262323; /* Mapped to Charcoal Onyx for heavy components */
+  --color-primary-900: #1C1919; /* Ultra-deep Onyx */
+
+  /* === Accent: Warm Charcoal Complementary === */
+  --color-accent-50: #F9F9F8;
+  --color-accent-100: #F1EFEF;
+  --color-accent-200: #E4E0DF;
+  --color-accent-300: #CCC6C5;
+  --color-accent-400: #999190;
+  --color-accent-500: #665C5A;
+  --color-accent-600: #4C4342;
+  --color-accent-700: #332D2C;
+  --color-accent-800: #262323;
+  --color-accent-900: #1C1919;
+
+  /* === Neutrals: Warm Alabaster Aesthetic === */
+  --color-bg: #FAFAFA; /* Soft warm Alabaster, feels architectural */
+  --color-surface: #FFFFFF; /* Pure White surface to stand out off BG */
+  --color-surface-hover: #F5F3F0; /* Subtle warm hover layer on surfaces */
+  --color-border: #EBEAE8; /* Warmer, softer border */
+  --color-border-subtle: #F2F1F0;
+
+  /* === Text === */
+  --color-text-primary: #1C1919; /* Charcoal, not pure black */
+  --color-text-secondary: #665C5A; /* Elegant warm gray */
+  --color-text-muted: #999190;
+  --color-text-inverse: #FFFFFF;
+
+  /* === Semantic === */
+  --color-success: #35A36A;
+  --color-warning: #DE8F1E;
+  --color-error: #BA3636;
+  --color-info: #227CBF;
+  --color-whatsapp: #24C060;
+
+  /* === Elevate Shadows (Layered & Diffuse) === */
+  --shadow-xs: 0 1px 2px rgba(28, 25, 25, 0.03);
+  --shadow-sm: 0 4px 12px rgba(28, 25, 25, 0.04);
+  --shadow-md: 0 8px 24px rgba(28, 25, 25, 0.06), 0 2px 6px rgba(28, 25, 25, 0.03);
+  --shadow-lg: 0 16px 48px rgba(28, 25, 25, 0.08), 0 4px 16px rgba(28, 25, 25, 0.04);
+  --shadow-glow: 0 0 32px rgba(155, 34, 38, 0.15); /* Soft Carmine Glow */
+
+  /* === Typography === */
+  --font-sans: 'Inter Variable', 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* === Animations with buttery easing === */
+  --animate-fade-in: fade-in 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-slide-up: slide-up 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-scale-in: scale-in 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-pulse-glow: pulse-glow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(36, 192, 96, 0.4); }
+  50% { box-shadow: 0 0 0 16px rgba(36, 192, 96, 0); }
+}
+
+/* === Base Styles === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+}
+
+/* === Refined Glassmorphism === */
+.glass {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+}
+
+@supports not (backdrop-filter: blur(24px)) {
+  .glass {
+    background: rgba(250, 250, 250, 0.98);
+    border-bottom: 1px solid var(--color-border);
+  }
+}
+
+/* === Skip link === */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-primary-600);
+  color: white;
+  z-index: 100;
+  font-weight: 600;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+@media print {
+  header, nav, button, .no-print { display: none !important; }
+  body { background: white !important; color: black !important; }
+  a { color: black !important; text-decoration: none !important; }
+  .bg-surface, .bg-bg { background: white !important; }
+  .border-border, .border-zinc-700 { border-color: #e5e7eb !important; }
+  .text-text-primary { color: #111827 !important; }
+  .text-text-secondary { color: #4b5563 !important; }
+  .text-text-muted { color: #6b7280 !important; }
+  table { width: 100% !important; border-collapse: collapse !important; }
+  th, td { border: 1px solid #e5e7eb !important; padding: 8px !important; }
+}
+
+/* === Reduced motion (accessibility) ===
+   Framer Motion animations are handled globally via <MotionConfig reducedMotion="user">.
+   This covers the CSS side: transitions, keyframe animations and smooth scroll. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

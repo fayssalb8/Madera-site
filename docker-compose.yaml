@@ -1,0 +1,50 @@
+services:
+  madera:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    expose:
+      - "3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - DATABASE_PATH=${DATABASE_PATH:-./server/data/madera.db}
+      - UPLOADS_DIR=${UPLOADS_DIR:-./server/data/uploads}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:?ADMIN_EMAIL is required}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:?ADMIN_PASSWORD is required}
+      - SESSION_SECRET=${SESSION_SECRET:?SESSION_SECRET is required}
+      - TRUST_PROXY=${TRUST_PROXY:-1}
+      - APP_ORIGIN=${APP_ORIGIN:?APP_ORIGIN is required}
+      - SESSION_COOKIE_NAME=${SESSION_COOKIE_NAME:-madera_session}
+      - SESSION_MAX_AGE_MS=${SESSION_MAX_AGE_MS:-604800000}
+      - RATE_LIMIT_LEADS_WINDOW_MS=${RATE_LIMIT_LEADS_WINDOW_MS:-900000}
+      - RATE_LIMIT_LEADS_MAX=${RATE_LIMIT_LEADS_MAX:-10}
+      - RATE_LIMIT_UPLOADS_WINDOW_MS=${RATE_LIMIT_UPLOADS_WINDOW_MS:-900000}
+      - RATE_LIMIT_UPLOADS_MAX=${RATE_LIMIT_UPLOADS_MAX:-300}
+      - RATE_LIMIT_LOGIN_MAX=${RATE_LIMIT_LOGIN_MAX:-5}
+      - RATE_LIMIT_PUBLIC_UPLOADS_MAX=${RATE_LIMIT_PUBLIC_UPLOADS_MAX:-10}
+      - WEBP_CONVERT_ENABLED=${WEBP_CONVERT_ENABLED:-true}
+      - WEBP_CONVERT_INTERVAL_MS=${WEBP_CONVERT_INTERVAL_MS:-604800000}
+      - WEBP_CONVERT_INITIAL_DELAY_MS=${WEBP_CONVERT_INITIAL_DELAY_MS:-300000}
+      - LEAD_NOTIFY_WEBHOOK_URL=${LEAD_NOTIFY_WEBHOOK_URL:-}
+      - SMTP_HOST=${SMTP_HOST:-}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_USER=${SMTP_USER:-}
+      - SMTP_PASS=${SMTP_PASS:-}
+      - SMTP_TO=${SMTP_TO:-}
+      - SMTP_FROM=${SMTP_FROM:-}
+      - FFMPEG_PATH=${FFMPEG_PATH:-}
+    volumes:
+      - madera-data:/app/server/data
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3001/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  madera-data:

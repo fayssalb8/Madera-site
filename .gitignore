@@ -1,0 +1,29 @@
+node_modules/
+dist/
+server/data/
+.env
+.env.*
+!.env.example
+.dev.vars
+*.local
+*.log
+coverage/
+__pycache__/
+*.py[cod]
+*.tsbuildinfo
+.vite/
+.wrangler/
+server/server/data/
+leads.csv
+
+# Python virtual environments
+.venv/
+.venv_test_check/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
